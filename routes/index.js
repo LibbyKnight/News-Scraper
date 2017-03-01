@@ -7,17 +7,22 @@ var request = require("request");
 var cheerio = require("cheerio");
 
 
+module.exports = function(router) {
+
 
 
 router.get('/', function (req, res, next) {
 
-    article.find({}, function (err, data) {
+
+         res.render('index');
+
+    // article.find({}, function (err, data) {
+
     
-        res.render('index', {title: 'News Scraper', articles: data});
+   
 
     });
 
-});
 
 router.get("/scrape", function(req, res) {
 
@@ -84,4 +89,4 @@ router.post("/note/:id", function(req, res) {
     });
 
 });
-module.exports = router;
+}

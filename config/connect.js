@@ -1,26 +1,26 @@
-var Promise = require('bluebird');
-var mongoose = require('mongoose');
+// var Promise = require('bluebird');
+// var mongoose = require('mongoose');
 
-mongoose.Promise = Promise;
+// mongoose.Promise = Promise;
 
 
-mongoose.createConnection("mongodb://localhost/newsscraper");
+// mongoose.createConnection("mongodb://localhost/newsscraper");
 
-var db = mongoose.connection;
+// var db = mongoose.connection;
 
-db.on("error", function(error) {
+// db.on("error", function(error) {
 
-  console.log("Mongoose Error: ", error);
+//   console.log("Mongoose Error: ", error);
 
-});
+// });
 
-db.once("open", function() {
+// db.once("open", function() {
 
-  console.log("Mongoose connection successful.");
+//   console.log("Mongoose connection successful.");
 
-});
+// });
 
-module.exports = db;
+// module.exports = db;
 
 
 

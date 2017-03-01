@@ -1,9 +1,61 @@
 
+    <style>
+      body {  
+        
+      }
+      .jumbotron {
+        background-image: url("https://i.imgur.com/pSSC6hz.png");
+        background-repeat: no-repeat;
+        background-size: 100%;
+      }
+      #wrapper {
+        width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 5%;
+      }
+      h1 {
+        text-align: center;
+        color: white;
+      }
+      .title {
+        text-align: center;
+        color: white;
+      }
+      #articles {
+        display: inline-block;
+        overflow: auto;
+        width: 60%;
+        height: 700px;
+      }
+      #notes {
+        float: right;
+        width: 30%;
+      }
+      textarea, input {
+        display: block;
+        width: 100%;
+        background-color: #FCF5C7;
+      }
+      input {
+        height: 36px;
+        font-size: 24px;
+      }
+      textarea {
+        height: 200px;
+        font-size: 18px;
+      }
+    </style>
+
+
+
 <nav class="navbar navbar-default navbar-fixed-top">
 
   <div class="container">
 
-   <button type="button" class="btn btn-default navbar-btn">Sign in</button>
+  <h4 class="title">Mongo Scraper</h4>
+
+   <button type="button" class="btn btn-danger navbar-btn">Scrape New Articles!</button>
 
   </div>
 
@@ -13,7 +65,13 @@
 
 <div class="jumbotron">
 
-  <h1>Hello, world!</h1>
+  <h1>Mongo Scraper</h1>
+
+  <h2>New York Times Edition</h2>
+
+  
+
+</div>
 
     {{#each articles}}
 
