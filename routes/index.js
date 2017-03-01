@@ -2,76 +2,51 @@ var express = require('express');
 var router = express.Router();
 var article = require('../models/articles.js');
 var note = require('../models/notes.js');
+var scraper = require('../controller/scraper.js');
+var request = require("request");
+var cheerio = require("cheerio");
 
 
 
 
-app.get("/scrape", function(req, res) {
+router.get('/', function (req, res, next) {
 
-  request("http://www.nytimes.com", function(error, response, html) {
 
-    var $ = cheerio.load(html);
+    article.find({}, function (err, data) {
 
-   
-   $('h2.story-heading').each(function(i, element){
-
-    var link = $(element).children().attr("href");
-
-    var title = $(element).children().text();
-
-    result.push({
-
-      title: title,
-
-      link: link
+    
+        res.render('index', {title: 'News Scraper', articles: data});
 
     });
-
-    });
-
-  console.log(result);
-
-  });
-
-  res.send("Scrape Complete");
-
-});
-
-app.get("/articles", function(req, res) {
-
-
-
-  Article.find({}, function(error, doc) {
-
-
-    if (error) {
-
-      console.log(error);
-
-    }
-
-     else {
-
-      res.json(doc);
-
-    }
-
-  });
 
 });
 
 
+router.get("/scrape", function(req, res) {
 
-app.get("/articles/:id", function(req, res) {
 
-  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+     scraper.scraping(function () {
 
-  Article.findOne({ "_id": req.params.id })
 
-  // ..and populate all of the notes associated with it
+
+        console.log("scraping completed");
+
+        res.redirect('/');
+
+
+
+    });
+
+
+
+});
+
+
+router.get("/note/:id", function(req, res) {
+
+  article.findOne({ "_id": req.params.id })
 
   .populate("note")
-
 
   .exec(function(error, doc) {
 
@@ -84,7 +59,8 @@ app.get("/articles/:id", function(req, res) {
 
     else {
 
-      res.json(doc);
+      res.send(doc.note);
+      console.log(doc.note);
 
     }
 
@@ -92,11 +68,9 @@ app.get("/articles/:id", function(req, res) {
 
 });
 
+router.post("/note/:id", function(req, res) {
 
-app.post("/articles/:id", function(req, res) {
-
-  var newNote = new Note(req.body);
-
+  var newNote = new note(req.body);
 
   newNote.save(function(error, doc) {
 
@@ -107,28 +81,24 @@ app.post("/articles/:id", function(req, res) {
 
     }
 
-
     else {
 
-      Article.findOneAndUpdate({ "_id": req.params.id }, { "note": doc._id })
+      article.findOneAndUpdate(
+         {_id: req.params.id},
+         {$push: {comments: doc._id}},
+         {new: true},
 
-        .exec(function(err, doc) {
+                function (error, newDoc) {
 
-        if (err) {
+                    if (error) res.send(error);
 
-          console.log(err);
-        }
+                    res.send(newDoc);
+        
+        })
 
-        else {
+      };
 
-          res.send(doc);
-
-        }
-
-      });
-
-    }
-
-  });
+    });
 
 });
+module.exports = router;

@@ -1,7 +1,6 @@
-// Require mongoose
 var mongoose = require("mongoose");
-// Create Schema class
 var Schema = mongoose.Schema;
+var db = require('../config/connect');
 
 // Create article schema
 var ArticleSchema = new Schema({
