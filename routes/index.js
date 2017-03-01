@@ -11,9 +11,7 @@ var cheerio = require("cheerio");
 
 router.get('/', function (req, res, next) {
 
-
     article.find({}, function (err, data) {
-
     
         res.render('index', {title: 'News Scraper', articles: data});
 
@@ -21,23 +19,16 @@ router.get('/', function (req, res, next) {
 
 });
 
-
 router.get("/scrape", function(req, res) {
 
 
      scraper.scraping(function () {
 
-
-
         console.log("scraping completed");
 
         res.redirect('/');
 
-
-
     });
-
-
 
 });
 
@@ -45,11 +36,8 @@ router.get("/scrape", function(req, res) {
 router.get("/note/:id", function(req, res) {
 
   article.findOne({ "_id": req.params.id })
-
   .populate("note")
-
   .exec(function(error, doc) {
-
 
     if (error) {
 
@@ -71,9 +59,7 @@ router.get("/note/:id", function(req, res) {
 router.post("/note/:id", function(req, res) {
 
   var newNote = new note(req.body);
-
   newNote.save(function(error, doc) {
-
 
     if (error) {
 
@@ -92,12 +78,9 @@ router.post("/note/:id", function(req, res) {
 
                     if (error) res.send(error);
 
-                    res.send(newDoc);
-        
+                    res.send(newDoc);       
         })
-
       };
-
     });
 
 });

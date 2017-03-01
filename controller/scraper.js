@@ -14,31 +14,31 @@ function scraping(cb) {
 
         console.log("Scraping");
 
-        $('.editorial li').each(function (i, element) {
+    
+  var result = [];
 
 
-                var link = $(element).children("a").attr('href');
-                var title = $(element).children().text();
-                var result = new article({
 
-                    link: link,
-                    title: title,
-        
-                });
-        
-                result.save(function (err) {
+    $('h2.story-heading').each(function(i, element){
 
-                    if (err) console.log(err);
 
-                })
+    var link = $(element).children().attr("href");
+    var title = $(element).children().text();
 
-            });
-        console.log(result);
+      result.push({
+      
+      title: title,
+      link: link
+
+    });
+
+ });
+
+  console.log(result);
+
+});
         console.log("finished scraping");
 
-        cb();
-
-    })
 }
 
 exports.scraping = scraping;
